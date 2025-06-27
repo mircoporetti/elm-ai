@@ -1,4 +1,4 @@
-package me.mircoporetti.elmai.persistence.config;
+package me.mircoporetti.elmai.infrastructure.config;
 
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
 import dev.langchain4j.data.segment.TextSegment;

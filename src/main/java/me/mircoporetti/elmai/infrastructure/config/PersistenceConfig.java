@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MemoryConfig {
+public class PersistenceConfig {
     private final EmbeddingModel embeddingModel;
 
-    public MemoryConfig(EmbeddingModel embeddingModel) {
+    public PersistenceConfig(EmbeddingModel embeddingModel) {
         this.embeddingModel = embeddingModel;
     }
 

@@ -1,4 +1,4 @@
-package me.mircoporetti.elmai.infrastructure.salaries;
+package me.mircoporetti.elmai.infrastructure.persistence;
 
 import dev.langchain4j.data.document.BlankDocumentException;
 import dev.langchain4j.data.document.Document;

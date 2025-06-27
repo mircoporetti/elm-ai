@@ -1,4 +1,4 @@
-package me.mircoporetti.elmai.webapp.config;
+package me.mircoporetti.elmai.infrastructure.config;
 
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;

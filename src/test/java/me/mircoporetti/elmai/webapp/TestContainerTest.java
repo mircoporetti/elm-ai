@@ -1,4 +1,4 @@
-package me.mircoporetti.elmai.webapp.salaries;
+package me.mircoporetti.elmai.webapp;
 
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;

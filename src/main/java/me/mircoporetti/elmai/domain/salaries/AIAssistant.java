@@ -1,10 +1,18 @@
 package me.mircoporetti.elmai.domain.salaries;
 
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-public class AIAssistant implements AIChat {
-    @Override
+@Component
+public class AIAssistant {
+
+    private final AIChat aiChat;
+
+    public AIAssistant(AIChat aiChat) {
+        this.aiChat = aiChat;
+    }
+
     public Flux<String> chat(String message) {
-        return null;
+        return aiChat.chat(message);
     }
 }
