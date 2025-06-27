@@ -1,0 +1,2 @@
+### Get chat response
+GET http://localhost:8080/chat?message=Tell me about how the AVS affects the employee net salary.
