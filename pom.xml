@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Elm AI</name>
     <description>Elm AI</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>21</java.version>
@@ -22,12 +23,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-docker-compose</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
         </dependency>
 
         <!-- LangChain4j -->
@@ -98,6 +93,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>elm-ai</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

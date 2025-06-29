@@ -2,5 +2,9 @@ pgvector:
   host: localhost
   port: 5432
   database: postgres
-  user: user-dev
-  password: password
+  user: ${DB_USER:user-dev}
+  password: ${DB_PASSWORD:password}
+
+elm-ai:
+  hugging-face-api-key: ${HF_API_KEY}
+  openai-api-key: ${HF_API_KEY}
