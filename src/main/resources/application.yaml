@@ -1,5 +1,6 @@
 spring:
-  name: Elm AI
+  application:
+    name: Elm AI
 
 vector-db:
   host: ${DB_HOST:localhost}
@@ -10,4 +11,4 @@ vector-db:
 
 elm-ai:
   hugging-face-api-key: ${HF_API_KEY}
-  openai-api-key: ${HF_API_KEY}
+  openai-api-key: ${OPENAI_API_KEY}
