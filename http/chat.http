@@ -1,5 +1,5 @@
 ### Get chat response
-GET http://localhost:8080/chat?message=Quali sono le persone non soggette a contributi AVS/AD?
+GET http://{{host}}/chat?message=Quali sono le persone non soggette a contributi AVS/AD?
 
 ### Load Documents
-POST http://localhost:8080/rag/load
+POST http://{{host}}/rag/load
