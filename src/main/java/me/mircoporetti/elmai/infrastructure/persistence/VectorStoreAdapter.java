@@ -12,6 +12,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class VectorStoreAdapter {
@@ -32,10 +36,16 @@ public class VectorStoreAdapter {
 
         try {
             LOGGER.info("Loading document from File System...");
-            Document document = FileSystemDocumentLoader.loadDocument(resource.getFile().toPath());
-            
-            LOGGER.info("Ingesting document...");
-            embeddingStoreIngestor.ingest(document);
+            try (InputStream inputStream = resource.getInputStream()) {
+                Path tempFile = Files.createTempFile("elm-doc", ".pdf");
+                Files.copy(inputStream, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+                Document document = FileSystemDocumentLoader.loadDocument(tempFile);
+                LOGGER.info("Ingesting document...");
+                embeddingStoreIngestor.ingest(document);
+
+                tempFile.toFile().deleteOnExit();
+            }
             LOGGER.info("Document ingested");
         } catch (BlankDocumentException e) {
             LOGGER.error("Document is empty");
