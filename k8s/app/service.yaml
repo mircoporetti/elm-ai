@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elm-ai
+  namespace: elm-ai
+spec:
+  type: ClusterIP
+  selector:
+    app: elm-ai
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080

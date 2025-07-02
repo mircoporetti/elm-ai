@@ -6,7 +6,6 @@ import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,18 +24,15 @@ public class PersistenceConfig {
 
     @Bean
     public EmbeddingStore<TextSegment> embeddingStore(
-            @Value("${pgvector.host}") String host,
-            @Value("${pgvector.port}") int port,
-            @Value("${pgvector.database}") String database,
-            @Value("${pgvector.user}") String user,
-            @Value("${pgvector.password}") String password
+            PGVectorConfig pgVectorConfig
     ) {
+
         return PgVectorEmbeddingStore.builder()
-                .host(host)
-                .port(port)
-                .database(database)
-                .user(user)
-                .password(password)
+                .host(pgVectorConfig.getHost())
+                .port(pgVectorConfig.getPort())
+                .database(pgVectorConfig.getDatabase())
+                .user(pgVectorConfig.getUser())
+                .password(pgVectorConfig.getPassword())
                 .table("elm_salaries_embeddings")
                 .dimension(embeddingModel.dimension())
                 .createTable(true)

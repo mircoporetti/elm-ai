@@ -1,0 +1,57 @@
+stages:
+  - build
+  - deploy
+
+build-app:
+  stage: build
+  image: eclipse-temurin:21-jdk
+  script:
+    - java -version
+    - ./mvnw clean package -DskipTests
+  artifacts:
+    paths:
+      - target/elm-ai.jar
+  tags:
+    - raspberrypi
+  only:
+    - branches
+
+build-docker-image:
+  stage: build
+  needs: ["build-app"]
+  image: docker:20.10.7
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    # Set up docker buildx builder for multi-arch
+    - docker buildx create --use --name mybuilder || docker buildx use mybuilder
+    - docker buildx inspect --bootstrap
+
+  script:
+    - cp target/elm-ai.jar .
+    - docker buildx build --platform linux/amd64,linux/arm64 -t $CI_REGISTRY/gitlab-mirco/elm-ai:$CI_COMMIT_SHA --push .
+  tags:
+    - raspberrypi
+  only:
+    - branches
+
+deploy:
+  stage: deploy
+  image: docker:20.10.7
+  services:
+    - docker:dind
+  before_script:
+    - echo "$KUBECONFIG" > /tmp/kubeconfig
+    - export KUBECONFIG=/tmp/kubeconfig
+  script:
+    - sed -i "s|\$CI_REGISTRY|$CI_REGISTRY|g" k8s/app/deployment.yaml
+    - sed -i "s|\$CI_COMMIT_SHA|$CI_COMMIT_SHA|g" k8s/app/deployment.yaml
+    - kubectl -n elm-ai apply -f k8s/namespace.yaml || echo "Namespace already exists"
+    - kubectl -n elm-ai apply -f k8s/app/pgvector-secret.yaml || echo "Secret already exists"
+    - kubectl -n elm-ai apply -f k8s/app/deployment.yaml
+    - kubectl -n elm-ai apply -f k8s/app/service.yaml
+  tags:
+    - raspberrypi
+  only:
+    - main

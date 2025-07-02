@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elm-ai
+  namespace: elm-ai
+  labels:
+    app: elm-ai
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: elm-ai
+  template:
+    metadata:
+      labels:
+        app: elm-ai
+    spec:
+      containers:
+        - name: elm-ai
+          image: $CI_REGISTRY/gitlab-mirco/elm-ai:$CI_COMMIT_SHA
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              value: pgvector.elm-ai.svc.cluster.local
+            - name: DB_NAME
+              value: elm
+            - name: DB_USER
+              value: elm
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgvector-secret
+                  key: password
+            - name: HF_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: elm-ai-secret
+                  key: HF_API_KEY
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: elm-ai-secret
+                  key: OPENAI_API_KEY
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: gitlab-registry-secret

@@ -1,7 +1,10 @@
-pgvector:
-  host: localhost
-  port: 5432
-  database: postgres
+spring:
+  name: Elm AI
+
+vector-db:
+  host: ${DB_HOST:localhost}
+  port: ${DB_PORT:5432}
+  database: ${DB_NAME:postgres}
   user: ${DB_USER:user-dev}
   password: ${DB_PASSWORD:password}
 
