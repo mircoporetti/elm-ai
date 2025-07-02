@@ -1,8 +1,11 @@
 package me.mircoporetti.elmai.infrastructure.config;
 
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.huggingface.HuggingFaceEmbeddingModel;
+import dev.langchain4j.model.openai.OpenAiChatModel;
+import dev.langchain4j.model.openai.OpenAiChatModelName;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import static java.time.Duration.ofSeconds;
 
 @Configuration
-public class OpenAIConfig {
-    private static final String MODEL_NAME = "gpt-4o-mini";
-
+public class AIModelConfig {
     @Value("${elm-ai.hugging-face-api-key}")
     public String hfApiKey;
     @Value("${elm-ai.openai-api-key}")
@@ -22,8 +23,8 @@ public class OpenAIConfig {
     @Bean
     public StreamingChatModel streamingChatLanguageModel() {
         return OpenAiStreamingChatModel.builder()
-                .apiKey(System.getenv(openApiKey))
-                .modelName(MODEL_NAME)
+                .apiKey(openApiKey)
+                .modelName(OpenAiChatModelName.GPT_4_O_MINI)
                 .build();
     }
 
