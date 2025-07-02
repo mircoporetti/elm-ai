@@ -51,6 +51,7 @@ deploy:
     - kubectl -n elm-ai apply -f k8s/app/pgvector-secret.yaml || echo "Secret already exists"
     - kubectl -n elm-ai apply -f k8s/app/deployment.yaml
     - kubectl -n elm-ai apply -f k8s/app/service.yaml
+    - kubectl -n elm-ai apply -f k8s/app/ingress.yaml
   tags:
     - raspberrypi
   only:
