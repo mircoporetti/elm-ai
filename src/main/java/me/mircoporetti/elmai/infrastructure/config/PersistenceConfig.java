@@ -28,11 +28,11 @@ public class PersistenceConfig {
     ) {
 
         return PgVectorEmbeddingStore.builder()
-                .host(pgVectorConfig.getHost())
-                .port(pgVectorConfig.getPort())
-                .database(pgVectorConfig.getDatabase())
-                .user(pgVectorConfig.getUser())
-                .password(pgVectorConfig.getPassword())
+                .host(pgVectorConfig.host())
+                .port(pgVectorConfig.port())
+                .database(pgVectorConfig.database())
+                .user(pgVectorConfig.user())
+                .password(pgVectorConfig.password())
                 .table("elm_salaries_embeddings")
                 .dimension(embeddingModel.dimension())
                 .createTable(true)
