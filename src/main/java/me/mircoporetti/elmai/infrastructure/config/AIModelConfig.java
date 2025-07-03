@@ -1,10 +1,8 @@
 package me.mircoporetti.elmai.infrastructure.config;
 
-import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.huggingface.HuggingFaceEmbeddingModel;
-import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
 import dev.langchain4j.model.openai.OpenAiStreamingChatModel;
 import org.springframework.beans.factory.annotation.Value;
