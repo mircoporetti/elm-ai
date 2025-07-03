@@ -1,5 +1,11 @@
 ### Get chat response
-GET http://{{host}}/chat?message=Quali sono le persone non soggette a contributi AVS/AD?
+POST http://{{host}}/chat/completion
+Content-Type: application/json
+
+{
+  "message": "Quali sono le persone non soggette a contributi AVS/AD??"
+}
+
 
 ### Load Documents
 POST http://{{host}}/rag/load

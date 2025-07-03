@@ -18,9 +18,9 @@ public class ChatController {
         this.aiAssistant = aiAssistant;
     }
 
-    @GetMapping
-    public Flux<String> chat(@RequestParam(defaultValue = "What is ELM?") String message) {
-        LOGGER.info("Received message: {}", message);
-        return aiAssistant.chat(message);
+    @PostMapping("/completion")
+    public Flux<String> chat(@RequestBody ChatCompletionRequest request) {
+        LOGGER.info("Received message: {}", request.message());
+        return aiAssistant.chat(request.message());
     }
 }

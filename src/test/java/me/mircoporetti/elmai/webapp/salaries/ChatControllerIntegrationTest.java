@@ -1,13 +1,10 @@
 package me.mircoporetti.elmai.webapp.salaries;
 
-import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
-import dev.langchain4j.rag.query.Query;
 import io.restassured.RestAssured;
 import me.mircoporetti.elmai.domain.salaries.AIAssistant;
 import me.mircoporetti.elmai.webapp.TestContainerTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
@@ -40,10 +37,12 @@ public class ChatControllerIntegrationTest extends TestContainerTest {
         when(aiAssistant.chat(userMessage)).thenReturn(Flux.just(aiResponse));
 
         given()
-            .param("message", userMessage)
-            .accept(MediaType.APPLICATION_JSON_VALUE)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body("""
+                {"message": "%s"}
+                """.formatted(userMessage))
         .when()
-            .get("/chat")
+            .post("/chat/completion")
         .then()
             .statusCode(200)
             .body(equalTo(aiResponse));
