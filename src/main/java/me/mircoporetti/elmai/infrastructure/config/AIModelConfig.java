@@ -30,7 +30,7 @@ public class AIModelConfig {
     public EmbeddingModel embeddingModel() {
         return HuggingFaceEmbeddingModel.builder()
                 .accessToken(hfApiKey)
-                .modelId("sentence-transformers/all-MiniLM-L6-v2")
+                .modelId("sentence-transformers/distiluse-base-multilingual-cased-v2")
                 .waitForModel(true)
                 .timeout(ofSeconds(60))
                 .build();
