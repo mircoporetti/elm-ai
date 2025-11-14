@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static java.time.Duration.ofSeconds;
-
 @Configuration
 public class AIModelConfig {
     @Value("${elm-ai.hugging-face-api-key}")
@@ -30,9 +28,9 @@ public class AIModelConfig {
     public EmbeddingModel embeddingModel() {
         return HuggingFaceEmbeddingModel.builder()
                 .accessToken(hfApiKey)
+                .baseUrl("https://router.huggingface.co/hf-inference/")
                 .modelId("sentence-transformers/distiluse-base-multilingual-cased-v2")
                 .waitForModel(true)
-                .timeout(ofSeconds(60))
                 .build();
     }
 }
